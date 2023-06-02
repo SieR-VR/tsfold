@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",
+
+    /* Modules */
+    "module": "CommonJS",                                /* Specify what module code is generated. */
+    "rootDir": "./",                                     /* Specify the root folder within your source files. */
+
+    /* JavaScript Support */
+    "allowJs": false,                                    /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
+    "checkJs": false,                                    /* Enable error reporting in type-checked JavaScript files. */
+
+    /* Emit */
+    "noEmit": false,                                     /* Disable emitting files from a compilation. */
+    "outDir": "./out",
+
+    /* Interop Constraints */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "noImplicitAny": true,                               /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+
+    /* Completeness */
+    "skipDefaultLibCheck": true,                         /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
+    "plugins": [
+      {
+        "type": "transformer",
+        "path": "./test/transform/index"
+      }
+    ]
+  }
+}
+  
