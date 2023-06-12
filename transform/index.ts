@@ -16,4 +16,4 @@ const factory: ts.CustomTransformersModuleFactory = ({ typescript }) => ({
     })
 });
 
-export = factory;
+module.exports = factory;

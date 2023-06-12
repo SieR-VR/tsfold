@@ -1,2 +1,2 @@
-const b = true;
+const b = ![];
 const a = !(!b && !false);

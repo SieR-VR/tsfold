@@ -2,6 +2,9 @@ import type ts from "typescript/lib/tsclibrary";
 import { Result, Ok, Err } from "ts-features";
 
 import { prefixUnary } from "./pure/prefixUnary";
+import { makeNodeWithFoldable } from "./util/foldable";
+import { getConstant } from "./constant";
+import { formatExpressionNode } from "./util/format";
 
 export interface TsFoldContext {
     // avoid to import actual value of ts
@@ -35,10 +38,26 @@ export function makeFileVisitor(context: TsFoldContext): (node: ts.SourceFile) =
 
 export function makeVisitor(context: TsFoldContext): (node: ts.Node) => ts.Node {
     return (node: ts.Node) => {
-        if (context.ts.isPrefixUnaryExpression(node)) {
-            return prefixUnary(node, context, (node) => {
-                return Err(context.ts.visitEachChild(node, makeVisitor(context), context.transformationContext));
-            });
+        if (context.ts.isVariableDeclaration(node.parent) && node.parent.name === node) {
+            return node;
+        }
+
+        if (context.ts.isExpression(node)) {
+            const maybeConstant = getConstant(node, context);
+
+            if (maybeConstant.is_ok()) {                
+                console.log(`[constant] ${formatExpressionNode(node, context)} => ${maybeConstant.unwrap()}}`);
+
+                return makeNodeWithFoldable({
+                    actual: maybeConstant.unwrap(),
+                }, context);
+            }
+
+            if (context.ts.isPrefixUnaryExpression(node)) {
+                return prefixUnary(node, context, (node) => {
+                    return Err(context.ts.visitEachChild(node, makeVisitor(context), context.transformationContext));
+                }).map_or_else((e) => e, (foldable) => makeNodeWithFoldable(foldable, context))
+            }
         }
 
         return context.ts.visitEachChild(node, makeVisitor(context), context.transformationContext);

@@ -9,14 +9,15 @@
 
     /* Modules */
     "module": "CommonJS",                                /* Specify what module code is generated. */
-    "rootDir": "./",                            /* Specify the root folder within your source files. */
+    // "moduleResolution": "nodenext",
+    "rootDir": "..",                            /* Specify the root folder within your source files. */
 
     /* JavaScript Support */
     "allowJs": false,                                    /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
     "checkJs": false,                                    /* Enable error reporting in type-checked JavaScript files. */
 
     /* Emit */
-    "outDir": "../test/transform",                         /* Specify an output folder for all emitted files. */
+    "outDir": "../test",                         /* Specify an output folder for all emitted files. */
 
     /* Interop Constraints */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
@@ -29,5 +30,8 @@
     /* Completeness */
     "skipDefaultLibCheck": true,                         /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
-  }
+  },
+  "include": [
+    "./**/*.ts"
+  ]
 }

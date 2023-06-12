@@ -4,6 +4,7 @@ import { Result, Ok, Err } from "ts-features";
 import { TsFoldContext } from "../visitor";
 import { formatExpressionNode } from "../util/format";
 import { Foldable } from "../util/foldable";
+import { getConstant } from "../constant";
 
 const prefixUnaryOperatorMap = new Map<ts.PrefixUnaryOperator, (value: any) => any>([
     [40, (value) => +value],
@@ -15,10 +16,6 @@ const prefixUnaryOperatorMap = new Map<ts.PrefixUnaryOperator, (value: any) => a
 ]);
 
 export function prefixUnary(node: ts.PrefixUnaryExpression, context: TsFoldContext, visitChild: (node: ts.Node) => Result<Foldable, ts.Node>): Result<Foldable, ts.Node> {
-    console.log(formatExpressionNode(node, context));
-
-    
-
     return visitChild(node.operand).map_or_else((node) => {
         return Err(node);
     }, (foldable) => {
